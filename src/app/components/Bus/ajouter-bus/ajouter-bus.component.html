@@ -1,0 +1,157 @@
+<form [formGroup]="save" novalidate (ngSubmit)="saveData()">
+  <div class="mb-4">
+    <ion-input
+      label="N° Immatriculation"
+      type="text"
+      label-placement="floating"
+      fill="outline"
+      [clearInput]="true"
+      autocomplete="off"
+      autocorrect="on"
+      formControlName="registration"
+    ></ion-input>
+    <span
+      *ngIf="
+        this.save.controls?.registration.touched &&
+        this.save.controls?.registration.invalid
+      "
+      class="text-center"
+    >
+      <div
+        class="ion-padding"
+        *ngIf="this.save.controls?.registration.errors?.required"
+      >
+        <ion-text color="danger"
+          >Désolé mais ce champs est obligatoire.</ion-text
+        >
+      </div>
+      <div
+        class="ion-padding"
+        color="danger"
+        *ngIf="this.save.controls?.registration.errors?.minlength"
+      >
+        <ion-text color="danger">Renseignez au moins 06 caractères.</ion-text>
+      </div>
+      <div
+        class="ion-padding"
+        color="danger"
+        *ngIf="this.save.controls?.registration.errors?.maxlength"
+      >
+        <ion-text color="danger">Renseignez au plus 20 caractères.</ion-text>
+      </div>
+    </span>
+  </div>
+
+  <div class="mb-4">
+    <ion-input
+      label="Couleur"
+      type="color"
+      label-placement="floating"
+      fill="outline"
+      [clearInput]="true"
+      autocomplete="off"
+      autocorrect="on"
+      formControlName="color"
+    ></ion-input>
+    <span
+      *ngIf="
+        this.save.controls?.color.touched && this.save.controls?.color.invalid
+      "
+      class="text-center"
+    >
+      <div
+        class="ion-padding"
+        *ngIf="this.save.controls?.color.errors?.required"
+      >
+        <ion-text color="danger"
+          >Désolé mais ce champs est obligatoire.</ion-text
+        >
+      </div>
+    </span>
+  </div>
+
+  <div class="mb-4">
+    <ion-select
+      label="Catégorie Véhicule"
+      label-placement="floating"
+      fill="outline"
+      multiple="false"
+      formControlName="type"
+    >
+      <ion-select-option>Break</ion-select-option>
+      <ion-select-option>Coaster</ion-select-option>
+      <ion-select-option>Monospace</ion-select-option>
+      <ion-select-option>GT (Grand Tourisme)</ion-select-option>
+    </ion-select>
+    <span
+      class="text-center"
+      *ngIf="
+        this.save.controls?.type.touched && this.save.controls?.type.invalid
+      "
+    >
+      <div
+        class="ion-padding"
+        *ngIf="this.save.controls?.type.errors?.required"
+      >
+        <ion-text color="danger"
+          >Désolé mais ce champs est obligatoire.</ion-text
+        >
+      </div>
+    </span>
+  </div>
+
+  <div class="mb-4">
+    <ion-select
+      label="Chauffeur"
+      label-placement="floating"
+      fill="outline"
+      multiple="false"
+      formControlName="driver"
+    >
+      <ion-select-option>Break</ion-select-option>
+      <ion-select-option>Coaster</ion-select-option>
+      <ion-select-option>Monospace</ion-select-option>
+      <ion-select-option>GT (Grand Tourisme)</ion-select-option>
+    </ion-select>
+    <span
+      *ngIf="
+        this.save.controls?.driver.touched && this.save.controls?.driver.invalid
+      "
+      class="text-center"
+    >
+      <div
+        class="ion-padding"
+        *ngIf="this.save.controls?.driver.errors?.required"
+      >
+        <ion-text color="danger"
+          >Désolé mais ce champs est obligatoire.</ion-text
+        >
+      </div>
+    </span>
+  </div>
+
+  <div class="grid grid-cols-2 gap-6 mb-4">
+    <div>
+      <ion-button expand="block" color="danger" (click)="takePicture()">
+        Annuler
+      </ion-button>
+    </div>
+    <div>
+      <ion-button
+        expand="block"
+        type="submit"
+        [disabled]="!save.valid || !isReady"
+      >
+        Enregistrer
+      </ion-button>
+    </div>
+  </div>
+
+  <img *ngIf="image" [src]="image" width="100%" height="40%" />
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button size="small" color="dark" (click)="takePicture()">
+      <ion-icon name="camera-reverse-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</form>
