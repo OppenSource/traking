@@ -1,0 +1,35 @@
+.custom-searchbar {
+  --ion-background-color: transparent;
+  border: none;
+}
+
+ion-card {
+  padding: 1%;
+  border: none;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+
+  img {
+    border-radius: 10px;
+    width: 100px;
+  }
+
+  ion-grid {
+    ion-row {
+      ion-col {
+        h4 {
+          margin: 0;
+          font-size: 0.8rem;
+          padding-top: 5px;
+          font-weight: 600;
+          color: var(--ion-color-dark);
+
+          span {
+            color: var(--ion-color-medium);
+            float: inline-end;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+}
