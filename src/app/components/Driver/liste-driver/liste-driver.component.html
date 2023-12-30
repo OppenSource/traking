@@ -1,0 +1,302 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-searchbar
+      placeholder="Filtrez les informations des chauffeurs....."
+      (ionInput)="handleInput($event)"
+      inputmode="text"
+      type="text"
+      class="custom-searchbar bg-transparent border-none"
+      style="border: none"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-3">
+  <ng-container *ngFor="let item of data">
+    <ion-card (click)="actionSheetData(item)">
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="4">
+            <img [src]="item.picture" alt="" width="100%" height="100px" />
+          </ion-col>
+          <ion-col size="8">
+            <h4>
+              <span>{{ item.fullname }} </span>
+              Noms :
+            </h4>
+            <h4>
+              <span>{{ item.subname }} </span>
+              Surnoms :
+            </h4>
+            <h4>
+              <span>{{ item.phone }} </span>
+              Téléphone :
+            </h4>
+            <h4>
+              <span>{{ item.cni }} </span>
+              CNI :
+            </h4>
+            <h4>
+              <span>{{ item.adresse }} </span>
+              Adresse :
+            </h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </ng-container>
+
+  <span *ngIf="data.length < 1">
+    <img src="assets/avatars/no-data.png" alt="No data" />
+    <div style="text-align: center !important">Aucune donnée disponible</div>
+  </span>
+</div>
+
+<ion-modal
+  [isOpen]="isModalOpen"
+  [initialBreakpoint]="0.98"
+  [breakpoints]="[0, 0, 0, 0]"
+>
+  <ng-template>
+    <ion-content>
+      <div class="container-fluid">
+        <div class="p-3">
+          <form [formGroup]="save" (ngSubmit)="updateData()" novalidate>
+            <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+              <ion-fab-button size="small" color="dark" (click)="takePicture()">
+                <ion-icon name="camera-reverse-outline"></ion-icon>
+              </ion-fab-button>
+            </ion-fab>
+
+            <div class="mb-4">
+              <ion-input
+                label="Noms & Prénoms"
+                type="text"
+                label-placement="floating"
+                fill="outline"
+                placeholder="Entrez le nom complet...."
+                [clearInput]="true"
+                autocomplete="off"
+                autocorrect="on"
+                formControlName="fullname"
+                [(ngModel)]="readyToUpdate.fullname"
+              ></ion-input>
+              <span
+                *ngIf="
+                  this.save.controls?.fullname.touched &&
+                  this.save.controls?.fullname.invalid
+                "
+              >
+                <div
+                  class="ion-padding"
+                  *ngIf="this.save.controls?.fullname.errors?.required"
+                >
+                  <ion-text color="danger"
+                    >Désolé mais ce champs est obligatoire.</ion-text
+                  >
+                </div>
+                <div
+                  class="ion-padding"
+                  color="danger"
+                  *ngIf="this.save.controls?.fullname.errors?.minlength"
+                >
+                  <ion-text color="danger"
+                    >Renseignez au moins 06 caractères.</ion-text
+                  >
+                </div>
+              </span>
+            </div>
+
+            <div class="mb-4">
+              <ion-input
+                label="Surnom"
+                type="text"
+                label-placement="floating"
+                fill="outline"
+                placeholder="Entrez le surnom...."
+                [clearInput]="true"
+                autocomplete="off"
+                autocorrect="on"
+                formControlName="subname"
+                [(ngModel)]="readyToUpdate.subname"
+              ></ion-input>
+              <span
+                *ngIf="
+                  this.save.controls?.subname.touched &&
+                  this.save.controls?.subname.invalid
+                "
+              >
+                <div
+                  class="ion-padding"
+                  *ngIf="this.save.controls?.subname.errors?.required"
+                >
+                  <ion-text color="danger"
+                    >Désolé mais ce champs est obligatoire.</ion-text
+                  >
+                </div>
+                <div
+                  class="ion-padding"
+                  color="danger"
+                  *ngIf="this.save.controls?.subname.errors?.minlength"
+                >
+                  <ion-text color="danger"
+                    >Renseignez au moins 06 caractères.</ion-text
+                  >
+                </div>
+              </span>
+            </div>
+
+            <div class="mb-4">
+              <ion-input
+                label="Téléphone"
+                type="text"
+                label-placement="floating"
+                fill="outline"
+                placeholder="Entrez le numéro de téléphone...."
+                [clearInput]="true"
+                autocomplete="off"
+                autocorrect="on"
+                formControlName="phone"
+                [(ngModel)]="readyToUpdate.phone"
+              ></ion-input>
+              <span
+                *ngIf="
+                  this.save.controls?.phone.touched &&
+                  this.save.controls?.phone.invalid
+                "
+              >
+                <div
+                  class="ion-padding"
+                  *ngIf="this.save.controls?.phone.errors?.required"
+                >
+                  <ion-text color="danger"
+                    >Désolé mais ce champs est obligatoire.</ion-text
+                  >
+                </div>
+                <div
+                  class="ion-padding"
+                  color="danger"
+                  *ngIf="this.save.controls?.phone.errors?.minlength"
+                >
+                  <ion-text color="danger"
+                    >Renseignez exactement 09 caractères.</ion-text
+                  >
+                </div>
+                <div
+                  class="ion-padding"
+                  color="danger"
+                  *ngIf="this.save.controls?.matricule.errors?.pattern"
+                >
+                  <ion-text color="danger"
+                    >Le numéro doit commencer par << 6 >>.</ion-text
+                  >
+                </div>
+              </span>
+            </div>
+
+            <div class="mb-4">
+              <ion-input
+                label="Adresse"
+                type="text"
+                label-placement="floating"
+                fill="outline"
+                placeholder="Entrez l'adresse...."
+                [clearInput]="true"
+                autocomplete="off"
+                autocorrect="on"
+                formControlName="adresse"
+                [(ngModel)]="readyToUpdate.adresse"
+              ></ion-input>
+              <span
+                *ngIf="
+                  this.save.controls?.adresse.touched &&
+                  this.save.controls?.adresse.invalid
+                "
+              >
+                <div
+                  class="ion-padding"
+                  *ngIf="this.save.controls?.adresse.errors?.required"
+                >
+                  <ion-text color="danger"
+                    >Désolé mais ce champs est obligatoire.</ion-text
+                  >
+                </div>
+                <div
+                  class="ion-padding"
+                  color="danger"
+                  *ngIf="this.save.controls?.adresse.errors?.minlength"
+                >
+                  <ion-text color="danger"
+                    >Renseignez au moins 03 caractères.</ion-text
+                  >
+                </div>
+              </span>
+            </div>
+
+            <div class="mb-4">
+              <ion-input
+                label="CNI"
+                type="text"
+                label-placement="floating"
+                fill="outline"
+                placeholder="Entrez le numéro de CNI...."
+                [clearInput]="true"
+                autocomplete="off"
+                autocorrect="on"
+                formControlName="cni"
+                [(ngModel)]="readyToUpdate.cni"
+              ></ion-input>
+              <span
+                *ngIf="
+                  this.save.controls?.adresse.touched &&
+                  this.save.controls?.cni.invalid
+                "
+              >
+                <div
+                  class="ion-padding"
+                  *ngIf="this.save.controls?.cni.errors?.required"
+                >
+                  <ion-text color="danger"
+                    >Désolé mais ce champs est obligatoire.</ion-text
+                  >
+                </div>
+                <div
+                  class="ion-padding"
+                  color="danger"
+                  *ngIf="this.save.controls?.cni.errors?.minlength"
+                >
+                  <ion-text color="danger"
+                    >Renseignez au moins 03 caractères.</ion-text
+                  >
+                </div>
+              </span>
+            </div>
+
+            <ion-grid fixed>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-button expand="block" type="reset" color="danger">
+                    Annuler <ion-icon name="close-circle-outline"></ion-icon>
+                  </ion-button>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-button
+                    expand="block"
+                    type="submit"
+                    [disabled]="!save.valid"
+                  >
+                    Modifier <ion-icon name="save-outline"></ion-icon>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            <!-- [disabled]="!isReady" -->
+            <div class="mx-auto" style="margin-left: auto; margin-right: auto">
+              <img *ngIf="image" [src]="image" width="60%" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
