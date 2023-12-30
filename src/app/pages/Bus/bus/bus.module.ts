@@ -1,20 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-
 import { BusPageRoutingModule } from './bus-routing.module';
-
 import { BusPage } from './bus.page';
 
+import { AjouterBusComponent } from '../../../components/Bus/ajouter-bus/ajouter-bus.component';
+import { AjouterBusSkeletonComponent } from '../../../components/Bus/ajouter-bus-skeleton/ajouter-bus-skeleton.component';
+import { ListerBusComponent } from '../../../components/Bus/lister-bus/lister-bus.component';
+import { ListerBusSkeletonComponent } from '../../../components/Bus/lister-bus-skeleton/lister-bus-skeleton.component';
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    BusPageRoutingModule
+  imports: [CommonModule, FormsModule, IonicModule, BusPageRoutingModule, ReactiveFormsModule],
+  declarations: [
+    BusPage,
+    AjouterBusComponent,
+    AjouterBusSkeletonComponent,
+    ListerBusComponent,
+    ListerBusSkeletonComponent,
   ],
-  declarations: [BusPage]
 })
 export class BusPageModule {}

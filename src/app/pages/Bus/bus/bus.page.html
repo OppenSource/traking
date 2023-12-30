@@ -1,13 +1,28 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>bus</ion-title>
+<ion-header class="ion-no-border bg-blue-500 text-white">
+  <ion-toolbar class="ion-align-items-center ion-justify-content-between">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-segment [(ngModel)]="selected">
+      <ion-segment-button value="ajouter">
+        <ion-label>Ajouter</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="lister">
+        <ion-label>Liste</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">bus</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div>
+    <div *ngIf="selected === 'ajouter'" class="p-3">
+      <app-ajouter-bus *ngIf="isConnected"></app-ajouter-bus>
+      <app-ajouter-bus-skeleton *ngIf="!isConnected"></app-ajouter-bus-skeleton>
+    </div>
+    <div *ngIf="selected === 'lister'">
+      <app-lister-bus *ngIf="isConnected"></app-lister-bus>
+      <app-lister-bus-skeleton *ngIf="!isConnected"></app-lister-bus-skeleton>
+    </div>
+  </div>
 </ion-content>
