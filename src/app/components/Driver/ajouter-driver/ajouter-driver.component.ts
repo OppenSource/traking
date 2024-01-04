@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FireStoreRestServiceService } from 'src/app/services/FireStore/fire-store-rest-service.service';
 import { OtherFunctionsService } from 'src/app/services/Others/other-functions.service';
+import { SmsService } from 'src/app/services/Sms/sms.service';
 import { UploadService } from 'src/app/services/upload/upload.service';
 
 @Component({
@@ -19,7 +20,8 @@ export class AjouterDriverComponent implements OnInit {
     private fb: FormBuilder,
     public upload: UploadService,
     public api: FireStoreRestServiceService,
-    public others: OtherFunctionsService
+    public others: OtherFunctionsService,
+    public sms: SmsService
   ) {}
 
   ngOnInit() {
@@ -38,6 +40,17 @@ export class AjouterDriverComponent implements OnInit {
       cni: ['', [Validators.required, Validators.minLength(10)]],
       adresse: ['', [Validators.required, Validators.minLength(3)]],
     });
+  }
+
+  async envoyerSms(destinationNumber: any, messageText: any) {
+    this.sms.sendSms(destinationNumber, messageText).subscribe(
+      (response) => {
+        console.log("Réponse de l'API SMS:", response);
+      },
+      (error) => {
+        console.error("Erreur lors de l'envoi du SMS:", error);
+      }
+    );
   }
 
   async saveData() {
@@ -67,9 +80,15 @@ export class AjouterDriverComponent implements OnInit {
         operation
       );
 
+      const message = "compte creer avec succès sur Traking"
+
+      this.envoyerSms('657807309', message);
+
       if (result) {
         this.save.reset();
         this.image = '';
+
+
       }
     } catch (error) {
       console.error("Une erreur est survenue lors de l'appel :", error);
