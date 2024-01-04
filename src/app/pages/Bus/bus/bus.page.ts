@@ -26,4 +26,11 @@ export class BusPage implements OnInit {
   ngOnDestroy(): void {
     this.internetStatusSubscription.unsubscribe();
   }
+
+  handleRefresh(event: any) {
+    setTimeout(() => {
+      location.reload();
+      event.target.complete();
+    }, 2000);
+  }
 }

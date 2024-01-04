@@ -9,8 +9,16 @@ import { AjouterBusComponent } from '../../../components/Bus/ajouter-bus/ajouter
 import { AjouterBusSkeletonComponent } from '../../../components/Bus/ajouter-bus-skeleton/ajouter-bus-skeleton.component';
 import { ListerBusComponent } from '../../../components/Bus/lister-bus/lister-bus.component';
 import { ListerBusSkeletonComponent } from '../../../components/Bus/lister-bus-skeleton/lister-bus-skeleton.component';
+import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, BusPageRoutingModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    BusPageRoutingModule,
+    ReactiveFormsModule,
+    TranslateModule,
+  ],
   declarations: [
     BusPage,
     AjouterBusComponent,
