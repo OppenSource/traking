@@ -1,0 +1,76 @@
+ion-header {
+  --border: none;
+  --background-color: transparent;
+
+  ion-toolbar {
+    padding: 2%;
+    --border: none;
+    --background-color: transparent;
+
+    ion-grid {
+      --border: none;
+
+      ion-row {
+        .img-header {
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 2rem;
+            margin-right: 4px;
+          }
+        }
+
+        .img-text-header {
+          padding: 0;
+
+          p {
+            font-size: 1rem;
+            margin-top: 0px;
+            margin-bottom: 0;
+            margin-left: 0;
+            margin-right: 0;
+            padding: 0;
+            font-weight: 200;
+
+            .salutation {
+              color: var(--ion-color-medium);
+              font-size: 0.85rem;
+            }
+          }
+          .journee {
+            font-size: 0.9rem;
+          }
+        }
+
+        .grid {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          background-color: var(--ion-color-light);
+          border-radius: 2rem;
+          font-size: 20px;
+          margin-left: auto;
+          margin-top: 2.5px;
+          color: var(--ion-color-dark);
+        }
+
+        .custom-icon {
+          position: relative;
+        }
+
+        .custom-badge {
+          position: absolute;
+          top: 0;
+          right: 0;
+          background-color: red; // Customize the badge background color
+          color: white; // Customize the badge text color
+          border-radius: 50%;
+          padding: 4px 8px; // Adjust padding as needed
+          font-size: 12px; // Customize the badge font size
+        }
+      }
+    }
+  }
+}
