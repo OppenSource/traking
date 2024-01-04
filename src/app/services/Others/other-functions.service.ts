@@ -8,12 +8,12 @@ export class OtherFunctionsService {
   constructor(private datePipe: DatePipe) {}
 
   ReformatEmail = (email: string): string =>
-  email.indexOf('@') > 0
-  ? `${email.substring(0, email.indexOf('@'))}@...org`
-  : email;
+    email.indexOf('@') > 0
+      ? `${email.substring(0, email.indexOf('@'))}@...org`
+      : email;
 
   getCurrentDate = async (): Promise<string> =>
-  this.datePipe.transform(new Date(), 'yyyy/MM/dd HH:mm:ss') || '';
+    this.datePipe.transform(new Date(), 'yyyy/MM/dd HH:mm:ss') || '';
 
   isDateAfterToday = async (inputDate: string): Promise<boolean> => {
     const providedDate = new Date(inputDate);
@@ -29,26 +29,34 @@ export class OtherFunctionsService {
     object: any,
     collectionName: string,
     action: string
-    ): string => {
-    const { fullname, matricule, registration, subname } = object || {};
+  ): string => {
+    const { fullname, matricule, registration, subname, bus } = object || {};
     const upperMatricule = matricule?.toUpperCase() || '';
 
     switch (collectionName) {
-    case 'student':
-      return `Souhaitez-vous vraiment ${this.reallyAction(
-        action
+      case 'admin':
+        return `Souhaitez-vous vraiment ${this.reallyAction(
+          action
+        )} l'administrateur ${fullname?.toUpperCase()} ?`;
+      case 'student':
+        return `Souhaitez-vous vraiment ${this.reallyAction(
+          action
         )} l'étudiant ${fullname?.toUpperCase()} identifié par la matricule ${upperMatricule}`;
-    case 'bus':
-      return `Souhaitez-vous vraiment ${this.reallyAction(
-        action
+      case 'bus':
+        return `Souhaitez-vous vraiment ${this.reallyAction(
+          action
         )} le bus ayant pour immatriculation ${registration?.toUpperCase()} ?`;
-    case 'driver':
-      return `Souhaitez-vous vraiment ${this.reallyAction(
-        action
+      case 'driver':
+        return `Souhaitez-vous vraiment ${this.reallyAction(
+          action
         )} le chauffeur ${fullname?.toUpperCase()} ayant le surnom ${subname?.toUpperCase()}?`;
+      case 'journey':
+        return `Souhaitez-vous vraiment ${this.reallyAction(
+          action
+        )} ce trajet au compte du bus immatriculé : ${bus?.toUpperCase()} ?`;
       // ... Ajoutez d'autres cas selon les besoins
-    default:
-      return '';
+      default:
+        return '';
     }
   };
 
@@ -56,49 +64,61 @@ export class OtherFunctionsService {
   //   action === 'save' ? 'enregistrer' : 'supprimer';
 
   reallyAction = (action: string): string =>
-  action === 'save'
-  ? 'enregistrer'
-  : action === 'update'
-  ? 'modifier'
-  : action === 'delete'
-  ? 'supprimer'
-  : '';
+    action === 'save'
+      ? 'enregistrer'
+      : action === 'update'
+      ? 'modifier'
+      : action === 'delete'
+      ? 'supprimer'
+      : '';
 
   HeaderActionSheetResponse = (object: any, collectionName: string): string => {
-    const { fullname, matricule, registration } = object || {};
+    const { fullname, matricule, registration, bus } = object || {};
 
     switch (collectionName) {
-    case 'student':
-      return `Etudiant : ${fullname.toUpperCase()} ( ${matricule} )`;
-    case 'bus':
-      return `Bus : Immatriculation ${registration.toUpperCase()}`;
-    case 'driver':
-      return `Chauffeur :  ${fullname.toUpperCase()}`;
+      case 'student':
+        return `Etudiant : ${fullname.toUpperCase()} ( ${matricule} )`;
+      case 'admin':
+        return `Administrateur : ${fullname.toUpperCase()}.`;
+      case 'journey':
+        return `Trajet du Bus : ${bus.toUpperCase()}`;
+      case 'bus':
+        return `Bus : Immatriculation ${registration.toUpperCase()}`;
+      case 'driver':
+        return `Chauffeur :  ${fullname.toUpperCase()}`;
       // ... Ajoutez d'autres cas selon les besoins
-    default:
-      return '';
+      default:
+        return '';
     }
   };
 
   actionSheetCollection = (
     object: any,
     collectionName: string
-    ): { keyName: string; keyValue: string } => {
+  ): { keyName: string; keyValue: string } => {
     const response = { keyName: '', keyValue: '' };
 
     switch (collectionName) {
-    case 'student':
-      response.keyName = 'matricule';
-      response.keyValue = object.matricule;
-      break;
-    case 'driver':
-      response.keyName = 'fullname';
-      response.keyValue = object.fullname;
-      break;
-    case 'bus':
-      response.keyName = 'registration';
-      response.keyValue = object.registration;
-      break;
+      case 'admin':
+        response.keyName = 'cni';
+        response.keyValue = object.cni;
+        break;
+      case 'student':
+        response.keyName = 'matricule';
+        response.keyValue = object.matricule;
+        break;
+      case 'driver':
+        response.keyName = 'fullname';
+        response.keyValue = object.fullname;
+        break;
+      case 'journey':
+        response.keyName = 'bus';
+        response.keyValue = object.bus;
+        break;
+      case 'bus':
+        response.keyName = 'registration';
+        response.keyValue = object.registration;
+        break;
       // ... Ajoutez d'autres cas selon les besoins
     }
 
@@ -108,10 +128,10 @@ export class OtherFunctionsService {
   getGreeting = (): string => {
     const currentHour = new Date().getHours();
     return currentHour >= 5 && currentHour < 12
-    ? 'Good morning'
-    : currentHour >= 12 && currentHour < 18
-    ? 'Good afternoon'
-    : 'Good evening';
+      ? 'Good morning'
+      : currentHour >= 12 && currentHour < 18
+      ? 'Good afternoon'
+      : 'Good evening';
   };
 
   getFirstMondayOfSecondWeekOfSeptember(): string {
@@ -132,7 +152,9 @@ export class OtherFunctionsService {
     firstMonday.setDate(firstMonday.getDate() + 7);
 
     // Formater la date en "yyyy/MM/dd"
-    return `${firstMonday.getFullYear()}/${this.padNumber(firstMonday.getMonth() + 1)}/${this.padNumber(firstMonday.getDate())}`;
+    return `${firstMonday.getFullYear()}/${this.padNumber(
+      firstMonday.getMonth() + 1
+    )}/${this.padNumber(firstMonday.getDate())}`;
   }
 
   private padNumber(num: number): string {
@@ -142,11 +164,15 @@ export class OtherFunctionsService {
   addDaysToFirstMondayOfSecondWeek(): string {
     const dateString = this.getFirstMondayOfSecondWeekOfSeptember();
     const daysToAdd = 8;
-    
+
     const currentDate = new Date(dateString);
-    const newDate = new Date(currentDate.getTime() + daysToAdd * 24 * 60 * 60 * 1000);
+    const newDate = new Date(
+      currentDate.getTime() + daysToAdd * 24 * 60 * 60 * 1000
+    );
 
     // Formater la date en "yyyy/MM/dd"
-    return `${newDate.getFullYear()}/${this.padNumber(newDate.getMonth() + 1)}/${this.padNumber(newDate.getDate())}`;
+    return `${newDate.getFullYear()}/${this.padNumber(
+      newDate.getMonth() + 1
+    )}/${this.padNumber(newDate.getDate())}`;
   }
 }
