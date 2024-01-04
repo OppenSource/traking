@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { FireStoreRestServiceService } from 'src/app/services/FireStore/fire-store-rest-service.service';
 import { InternetService } from 'src/app/services/Internet/internet.service';
 import { OtherFunctionsService } from 'src/app/services/Others/other-functions.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { UploadService } from 'src/app/services/upload/upload.service';
 
 @Component({
@@ -18,11 +19,13 @@ export class ListerBusComponent implements OnInit {
   linkUrl: string | any;
   data: any[] = [];
   list: any[] = [];
+  listDriver: any[] = [];
   loadingData = true;
   isConnected: boolean | any;
   collectionnName: any = 'bus';
   private internetStatusSubscription: Subscription | any;
   readyToUpdate: any;
+  account: any;
   isModalOpen: boolean | undefined;
   options = ['KaiBoy', 'Grand Prof', 'Chef Baham'];
   selectedOption: string | undefined;
@@ -32,10 +35,11 @@ export class ListerBusComponent implements OnInit {
     public api: FireStoreRestServiceService,
     private other: OtherFunctionsService,
     private fb: FormBuilder,
+    public auth: AuthService,
     public upload: UploadService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.selectedOption = this.options[0];
     this.save = this.fb.group({
       registration: [
@@ -60,6 +64,33 @@ export class ListerBusComponent implements OnInit {
         }
         this.isConnected = isConnected;
       });
+
+    this.loadDataDriver();
+    this.account = await this.auth.getData('account');
+  }
+
+  async loadDataDriver() {
+    try {
+      const dataObservable = await (
+        await this.api.getAllData('driver')
+      ).toPromise();
+
+      if (dataObservable) {
+        // this.listBus =
+        let data = [];
+        for (let i = 0; i < dataObservable.length; i++) {
+          data[i] = dataObservable[i].fullname;
+        }
+        this.listDriver = data;
+      } else {
+        console.warn("Aucune donnée n'a été renvoyée.");
+      }
+    } catch (error) {
+      console.error(
+        "Une erreur s'est produite lors du chargement des données:",
+        error
+      );
+    }
   }
 
   async loadData() {
@@ -132,8 +163,10 @@ export class ListerBusComponent implements OnInit {
         driver: this.save.value.driver,
         picture:
           this.linkUrl === '' ? this.readyToUpdate.picture : this.linkUrl,
+        lat: this.save.value.lat,
+        long: this.save.value.long,
         updatedAt: await this.other.getCurrentDate(),
-        updatedBy: '',
+        updatedBy: this.account.fullname,
         createdAt: this.readyToUpdate.createdAt,
         createdBy: this.readyToUpdate.createdBy,
       };

@@ -17,7 +17,11 @@
       <ion-grid fixed>
         <ion-row>
           <ion-col size="4">
-            <img [src]="item.picture" alt="" width="100%" height="100px" />
+            <img
+              [src]="item.picture"
+              alt=""
+              style="width: 100%; height: 85px"
+            />
           </ion-col>
           <ion-col size="8">
             <h4>
@@ -42,6 +46,11 @@
       </ion-grid>
     </ion-card>
   </ng-container>
+
+  <span *ngIf="data.length < 1">
+    <img src="assets/avatars/no-data.png" alt="No data" />
+    <div style="text-align: center !important">Aucune donnée disponible</div>
+  </span>
 </div>
 
 <ion-modal
@@ -181,10 +190,7 @@
                 formControlName="driver"
                 [(ngModel)]="readyToUpdate.driver"
               >
-                <ion-select-option
-                  *ngFor="let option of options"
-                  [value]="option"
-                >
+                <ion-select-option *ngFor="let option of listDriver">
                   {{ option }}
                 </ion-select-option>
               </ion-select>
@@ -225,7 +231,7 @@
             </ion-grid>
             <!-- [disabled]="!isReady" -->
             <div class="mx-auto" style="margin-left: auto; margin-right: auto">
-              <img *ngIf="image" [src]="image" width="60%" />
+              <img *ngIf="image" [src]="image" width="100%" />
             </div>
           </form>
         </div>
