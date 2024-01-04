@@ -135,4 +135,38 @@ export class ToastService {
   async showWarning(message: any, duration: any) {
     this.showToast(message, 'dark', 'bottom', 'dark-outline', 5000);
   }
+
+  async successLogin() {
+    const toast = await this.toastController.create({
+      message: 'Connexion établie avec succès.',
+      duration: 5000,
+      color: 'success',
+      icon: 'happy-outline',
+      position: 'top',
+    });
+    await toast.present();
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Renseignez tous les champs avant de continuer.',
+      duration: 5000,
+      color: 'danger',
+      icon: 'alert-circle-outline',
+      position: 'top',
+    });
+    await toast.present();
+  }
+
+  async successResetPassword() {
+    const toast = await this.toastController.create({
+      message:
+        'Mot de passe réinitialisé avec succès, veillez consulter votre messagérie téléphonique.',
+      duration: 4000,
+      color: 'success',
+      icon: 'checkmark-done-circle-outline',
+      position: 'top',
+    });
+    await toast.present();
+  }
 }
