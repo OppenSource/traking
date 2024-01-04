@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import {
   DocumentData,
@@ -36,7 +35,6 @@ export class FireStoreRestServiceService {
     private actionSheetCtrl: ActionSheetController
   ) {}
 
-
   // Méthode pour vérifier si une entité existe dans une collection
   async doesEntityExist(
     keyName: any,
@@ -59,7 +57,6 @@ export class FireStoreRestServiceService {
     }
   }
 
-
   async getAllData(collectionName: any): Promise<Observable<any[]>> {
     const loading = await this.loadingCtrl.create({
       message: 'Chargement des données...',
@@ -77,7 +74,7 @@ export class FireStoreRestServiceService {
         return from([result]);
       } else {
         this.toast.showResourceUnavailable();
-        return from([[]]);  // Retourne un tableau vide si le résultat est vide
+        return from([[]]); // Retourne un tableau vide si le résultat est vide
       }
     } catch (error) {
       console.error('Error in getAllData:', error);
@@ -86,11 +83,9 @@ export class FireStoreRestServiceService {
       // Par exemple, afficher un message d'erreur à l'utilisateur
 
       this.toast.showResourceUnavailable();
-      return throwError(error);  // Retourne une observable avec l'erreur
+      return throwError(error); // Retourne une observable avec l'erreur
     }
   }
-
-
 
   // Méthode pour récupérer un seul document de la collection en fonction d'une clé et d'une valeur
   async getOne(
@@ -160,7 +155,7 @@ export class FireStoreRestServiceService {
         if (
           collectionName == 'student' ||
           collectionName == 'driver' ||
-          collectionName == 'administrator'
+          collectionName == 'admin'
         ) {
           object.login = login;
           object.password = password;
@@ -268,7 +263,6 @@ export class FireStoreRestServiceService {
           5000
         );
 
-
         // Renvoyer true pour indiquer que la suppression a réussi
         return true;
       } else {
@@ -351,9 +345,13 @@ export class FireStoreRestServiceService {
                       // Résoudre la promesse avec le résultat de la fonction deleteOne
                       resolve(result);
                     } else if (operation == 'update') {
-                      const result = await this.updateOne(rest.keyName, rest.keyValue,
-                        collectionName, object);
-                        resolve(result);
+                      const result = await this.updateOne(
+                        rest.keyName,
+                        rest.keyValue,
+                        collectionName,
+                        object
+                      );
+                      resolve(result);
                     }
                   } catch (error) {
                     // Affichage d'un message Toast en cas d'erreur pendant l'enregistrement ou la suppression
