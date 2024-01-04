@@ -5,10 +5,21 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './lister-bus-skeleton.component.html',
   styleUrls: ['./lister-bus-skeleton.component.scss'],
 })
-export class ListerBusSkeletonComponent  implements OnInit {
+export class ListerBusSkeletonComponent implements OnInit {
+  items: any[] = Array.from({ length: 4 });
 
-  constructor() { }
+  getSkeletonClass(contentType: string): string {
+    switch (contentType) {
+      case 'h3':
+        return 'skeleton-width-80';
+      case 'p':
+        return 'skeleton-width-60';
+      default:
+        return '';
+    }
+  }
+
+  constructor() {}
 
   ngOnInit() {}
-
 }
