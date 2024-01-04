@@ -1,0 +1,59 @@
+ion-segment {
+  width: 85%;
+  --border: none;
+  margin-left: auto;
+  margin-right: auto;
+  background: transparent;
+}
+
+ion-segment-button {
+  text-transform: capitalize;
+  --indicator-color: var(--ion-color-dark);
+}
+
+/* Material Design styles */
+ion-segment-button.md {
+  text-transform: capitalize;
+  --color-checked: var(--ion-color-dark);
+}
+
+.ion-segment {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  --border: none;
+  border-radius: 0px;
+  padding: 3%;
+  background: transparent;
+
+  ion-segment-button {
+    --background-checked: var(--ion-color-primary);
+    --color-checked: var(--ion-color-primary-contrast);
+    --indicator-color: transparent;
+    margin-bottom: 2%;
+    padding: 1.5%;
+  }
+}
+
+.scanner-buttons{
+  margin: 0;
+  position: absolute;
+  bottom: 100px;
+  width: 100vw;
+  height: 50vw;
+  z-index: 11;
+}
+
+
+.scan-box{
+  border: 2px solid var(--ion-color-dark);
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+  content: '';
+  display: block;
+  flex: 50%;
+  width: 300px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+}
