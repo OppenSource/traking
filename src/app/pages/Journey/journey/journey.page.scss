@@ -1,0 +1,23 @@
+ion-segment {
+  width: 60%;
+  --border: none;
+  margin-left: auto;
+  margin-right: auto;
+  background: transparent;
+  text-transform: capitalize;
+}
+
+ion-segment-button {
+  text-transform: capitalize;
+  --indicator-color: var(--ion-color-dark);
+}
+
+ion-segment-button.md {
+  text-transform: capitalize;
+  --color-checked: var(--ion-color-dark);
+}
+
+.custom-searchbar {
+  --ion-background-color: transparent;
+  border: none;
+}
