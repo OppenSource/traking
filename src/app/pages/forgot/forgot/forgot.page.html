@@ -1,13 +1,49 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>forgot</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div class="container-fluid">
+    <div class="text-header">Réinitialiser la Sécurité 👷🏽</div>
+    <div class="text-sub-header">
+      Ce n'est pas grave si vous oubliez votre mot de passe. <br />
+      Tapez simplement votre email et nous vous enverrons un nouveau mot de
+      passe.
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">forgot</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <div class="form-login">
+      <form [formGroup]="forgot" (ngSubmit)="submitForm()" novalidate>
+        <div class="form-group">
+          <ion-input
+            label="Adresse Email"
+            type="text"
+            label-placement="floating"
+            fill="outline"
+            placeholder="nanyangbrice@gmail.com"
+            [clearInput]="true"
+            autocomplete="off"
+            autocorrect="off"
+            formControlName="account"
+          ></ion-input>
+          <span
+            *ngIf="this.forgot.controls?.account.touched && this.forgot.controls?.account.invalid"
+          >
+            <div
+              class="ion-padding"
+              *ngIf="this.forgot.controls?.account.errors?.required"
+            >
+              <ion-text color="danger"
+                >Désolé mais ce champs est obligatoire.</ion-text
+              >
+            </div>
+          </span>
+        </div>
+
+        <ion-button expand="block" type="submit"
+          >Réinitialiser <ion-icon name="reload-circle-outline"></ion-icon
+        ></ion-button>
+
+        <div class="footer-text">
+          Je souhaiterais plutot me
+          <span color="primary" routerLink="/login"> connecté</span>.
+        </div>
+      </form>
+    </div>
+  </div>
 </ion-content>
