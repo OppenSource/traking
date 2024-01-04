@@ -1,1 +1,144 @@
-<app-header></app-header>
+<app-header [user]="account"></app-header>
+
+<ion-content>
+  <div class="p-3">
+    <br />
+    <br />
+    <br />
+    <div class="grid grid-cols-2 gap-4">
+      <div
+        class="rounded-lg shadow-xl hover:shadow-lg"
+        [routerLink]="['/bus']"
+        *ngIf="account?.account === 'driver' || account?.account === 'admin'"
+      >
+        <div class="p-4">
+          <img
+            src="assets/bg/bus-school.png"
+            width="90"
+            alt=""
+            srcset=""
+            style="margin-left: auto; margin-right: auto"
+          />
+        </div>
+        <div class="bg-slate-300 p-2 text-center dark:bg-slate-800 rounded-lg">
+          <h5
+            class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal dark:text-white"
+          >
+            {{ "home.bus" | translate }}
+          </h5>
+        </div>
+      </div>
+
+      <div
+        class="rounded-lg shadow-xl hover:shadow-lg"
+        [routerLink]="['/student']"
+        *ngIf="account?.account === 'admin'"
+      >
+        <div class="p-4">
+          <img
+            src="assets/bg/students.png"
+            width="90"
+            alt=""
+            srcset=""
+            style="margin-left: auto; margin-right: auto"
+          />
+        </div>
+        <div class="bg-slate-300 p-2 text-center dark:bg-slate-800 rounded-lg">
+          <h5
+            class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal dark:text-white"
+          >
+            {{ "home.etudiant" | translate }}
+          </h5>
+        </div>
+      </div>
+
+      <div
+        class="rounded-lg shadow-xl hover:shadow-lg"
+        [routerLink]="['/journey']"
+        *ngIf="account?.account === 'admin'"
+      >
+        <div class="p-4">
+          <img
+            src="assets/bg/user-experience.png"
+            width="90"
+            alt=""
+            srcset=""
+            style="margin-left: auto; margin-right: auto"
+          />
+        </div>
+        <div class="bg-slate-300 p-2 text-center dark:bg-slate-800 rounded-lg">
+          <h5
+            class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal dark:text-white"
+          >
+            {{ "home.trajet" | translate }}
+          </h5>
+        </div>
+      </div>
+
+      <div
+        class="rounded-lg shadow-xl hover:shadow-lg"
+        [routerLink]="['/driver']"
+        *ngIf="account?.account === 'driver' || account?.account === 'admin'"
+      >
+        <div class="p-4">
+          <img
+            src="assets/bg/chauffeur.png"
+            width="90"
+            alt=""
+            srcset=""
+            style="margin-left: auto; margin-right: auto"
+          />
+        </div>
+        <div class="bg-slate-300 p-2 text-center dark:bg-slate-800 rounded-lg">
+          <h5
+            class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal dark:text-white"
+          >
+            {{ "home.chauffeur" | translate }}
+          </h5>
+        </div>
+      </div>
+
+      <div
+        class="rounded-lg shadow-xl hover:shadow-lg"
+        [routerLink]="['/admin']"
+        *ngIf="account?.account === 'admin'"
+      >
+        <div class="p-4">
+          <img
+            src="assets/bg/engagement.png"
+            width="90"
+            alt=""
+            srcset=""
+            style="margin-left: auto; margin-right: auto"
+          />
+        </div>
+        <div class="bg-slate-300 p-2 text-center dark:bg-slate-800 rounded-lg">
+          <h5
+            class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal dark:text-white"
+          >
+            {{ "home.admin" | translate }}
+          </h5>
+        </div>
+      </div>
+
+      <div class="rounded-lg shadow-xl hover:shadow-lg" [routerLink]="['/map']">
+        <div class="p-4">
+          <img
+            src="assets/bg/boussole.png"
+            width="90"
+            alt=""
+            srcset=""
+            style="margin-left: auto; margin-right: auto"
+          />
+        </div>
+        <div class="bg-slate-300 p-2 text-center dark:bg-slate-800 rounded-lg">
+          <h5
+            class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal dark:text-white"
+          >
+            {{ "home.maps" | translate }}
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
