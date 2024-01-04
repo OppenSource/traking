@@ -1,13 +1,14 @@
 <form [formGroup]="save" novalidate (ngSubmit)="saveData()">
   <div class="mb-4">
     <ion-input
-      label="N° Immatriculation"
+      label=" {{ 'bus.ajouter.immatriculation.label' | translate }} "
       type="text"
       label-placement="floating"
       fill="outline"
       [clearInput]="true"
       autocomplete="off"
       autocorrect="on"
+      placeholder="{{ 'bus.ajouter.immatriculation.placeholder' | translate }}"
       formControlName="registration"
     ></ion-input>
     <span
@@ -22,7 +23,9 @@
         *ngIf="this.save.controls?.registration.errors?.required"
       >
         <ion-text color="danger"
-          >Désolé mais ce champs est obligatoire.</ion-text
+          >{{
+            "bus.ajouter.immatriculation.regles.obligatoire" | translate
+          }}.</ion-text
         >
       </div>
       <div
@@ -30,21 +33,25 @@
         color="danger"
         *ngIf="this.save.controls?.registration.errors?.minlength"
       >
-        <ion-text color="danger">Renseignez au moins 06 caractères.</ion-text>
+        <ion-text color="danger"
+          >{{ "bus.ajouter.immatriculation.regles.min" | translate }}.</ion-text
+        >
       </div>
       <div
         class="ion-padding"
         color="danger"
         *ngIf="this.save.controls?.registration.errors?.maxlength"
       >
-        <ion-text color="danger">Renseignez au plus 20 caractères.</ion-text>
+        <ion-text color="danger">{{
+          "bus.ajouter.immatriculation.regles.max" | translate
+        }}</ion-text>
       </div>
     </span>
   </div>
 
   <div class="mb-4">
     <ion-input
-      label="Couleur"
+      label="{{ 'bus.ajouter.couleur.label' | translate }}"
       type="color"
       label-placement="floating"
       fill="outline"
@@ -64,7 +71,7 @@
         *ngIf="this.save.controls?.color.errors?.required"
       >
         <ion-text color="danger"
-          >Désolé mais ce champs est obligatoire.</ion-text
+          >{{ "bus.ajouter.couleur.obligatoire" | translate }}"</ion-text
         >
       </div>
     </span>
@@ -102,16 +109,16 @@
 
   <div class="mb-4">
     <ion-select
-      label="Chauffeur"
+      label="{{ 'bus.ajouter.chauffeur.label' | translate }}"
       label-placement="floating"
       fill="outline"
       multiple="false"
       formControlName="driver"
+      placeholder="{{ 'bus.ajouter.chauffeur.placeholder' | translate }}"
     >
-      <ion-select-option>Break</ion-select-option>
-      <ion-select-option>Coaster</ion-select-option>
-      <ion-select-option>Monospace</ion-select-option>
-      <ion-select-option>GT (Grand Tourisme)</ion-select-option>
+      <ion-select-option *ngFor="let option of list">
+        {{ option }}
+      </ion-select-option>
     </ion-select>
     <span
       *ngIf="
@@ -124,7 +131,7 @@
         *ngIf="this.save.controls?.driver.errors?.required"
       >
         <ion-text color="danger"
-          >Désolé mais ce champs est obligatoire.</ion-text
+          >{{ 'bus.ajouter.chauffeur.placeholder' | translate }}.</ion-text
         >
       </div>
     </span>
